@@ -5,4 +5,6 @@ type KujiStrategy interface {
 	PickOneByKeyAndIndex(string, int64) (string, error)
 	PickAndDeleteOneByKey(string) (string, error)
 	RegisterCandidatesWithKey(string, []KujiCandidate) (int64, error)
+	Len(string) (int64, error)
+	List(string) ([]string, error)
 }
