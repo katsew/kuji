@@ -25,3 +25,11 @@ func (k Kuji) PickAndDeleteOneByKey(key string) (string, error) {
 func (k Kuji) RegisterCandidatesWithKey(key string, candidates []KujiCandidate) (int64, error) {
 	return k.strategy.RegisterCandidatesWithKey(key, candidates)
 }
+
+func (k Kuji) Len(key string) (int64, error) {
+	return k.strategy.Len(key)
+}
+
+func (k Kuji) List(key string) ([]string, error) {
+	return k.strategy.List(key)
+}
