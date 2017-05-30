@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type Util struct {}
+type Util struct{}
 
 /**
  * Spread all candidates into array
@@ -57,5 +57,5 @@ func (u *Util) Shuffle2(target []int64) []int64 {
  */
 func (u *Util) RandomNumberFromRange(min, max int64) int64 {
 	rand.Seed(time.Now().UnixNano())
-	return rand.Int63n(max - min) + min
+	return rand.Int63n(max-min) + min
 }

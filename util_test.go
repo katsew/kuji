@@ -9,15 +9,15 @@ var util *Util
 func TestUtil_SpreadCandidates(t *testing.T) {
 	result := util.SpreadCandidates([]KujiCandidate{
 		KujiCandidate{
-			Id: 1,
+			Id:     1,
 			Weight: 100,
 		},
 		KujiCandidate{
-			Id: 2,
+			Id:     2,
 			Weight: 200,
 		},
 		KujiCandidate{
-			Id: 3,
+			Id:     3,
 			Weight: 700,
 		},
 	})
@@ -52,7 +52,7 @@ func TestUtil_SpreadCandidates(t *testing.T) {
 func TestUtil_RandomNumberFromRange(t *testing.T) {
 	result := util.RandomNumberFromRange(13, 81)
 
-	if ! (result >= 13 && result <= 81) {
+	if !(result >= 13 && result <= 81) {
 		t.Errorf("Random number out of range (result: %d)", result)
 	}
 }

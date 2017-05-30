@@ -4,7 +4,7 @@ type Kuji struct {
 	strategy KujiStrategy
 }
 
-func NewKuji (strategy KujiStrategy) (Kuji) {
+func NewKuji(strategy KujiStrategy) Kuji {
 	return Kuji{
 		strategy,
 	}
