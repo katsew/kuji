@@ -1,7 +1,8 @@
 package kuji
 
 type KujiStrategy interface {
-	PickOneByKey(s string) (string, error)
-	PickAndDeleteOneByKey(s string) (string, error)
-	RegisterCandidatesWithKey(s string, c []KujiCandidate) (int64, error)
+	PickOneByKey(string) (string, error)
+	PickOneByKeyAndIndex(string, int64) (string, error)
+	PickAndDeleteOneByKey(string) (string, error)
+	RegisterCandidatesWithKey(string, []KujiCandidate) (int64, error)
 }

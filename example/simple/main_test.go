@@ -14,7 +14,7 @@ func BenchmarkPickOne(b *testing.B) {
 		Password: "",
 		DB: 0,
 	}
-	kr := kuji_redis.NewKujiRedisStrategy(&opt)
+	kr := kuji_redis.SimpleStrategy(&opt)
 	instance := kuji.NewKuji(kr)
 
 	c := []kuji.KujiCandidate{
@@ -32,13 +32,13 @@ func BenchmarkPickOne(b *testing.B) {
 		},
 	}
 
-	_, err := instance.RegisterCandidatesWithKey("foo", c)
+	_, err := instance.RegisterCandidatesWithKey("simple", c)
 	if (err != nil) {
 		panic(err)
 	}
 
 	for i := 0; i < b.N; i++ {
-		num, err := instance.PickOneByKey("foo")
+		num, err := instance.PickOneByKey("simple")
 		if err != nil {
 			panic(err)
 		}

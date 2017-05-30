@@ -10,14 +10,18 @@ func NewKuji (strategy KujiStrategy) (Kuji) {
 	}
 }
 
-func (k Kuji) PickOneByKey(s string) (string, error) {
-	return k.strategy.PickOneByKey(s)
+func (k Kuji) PickOneByKey(key string) (string, error) {
+	return k.strategy.PickOneByKey(key)
 }
 
-func (k Kuji) PickAndDeleteOneByKey(s string) (string, error) {
-	return k.strategy.PickAndDeleteOneByKey(s)
+func (k Kuji) PickOneByKeyAndIndex(key string, index int64) (string, error) {
+	return k.strategy.PickOneByKeyAndIndex(key, index)
 }
 
-func (k Kuji) RegisterCandidatesWithKey(s string, c []KujiCandidate) (int64, error) {
-	return k.strategy.RegisterCandidatesWithKey(s, c)
+func (k Kuji) PickAndDeleteOneByKey(key string) (string, error) {
+	return k.strategy.PickAndDeleteOneByKey(key)
+}
+
+func (k Kuji) RegisterCandidatesWithKey(key string, candidates []KujiCandidate) (int64, error) {
+	return k.strategy.RegisterCandidatesWithKey(key, candidates)
 }

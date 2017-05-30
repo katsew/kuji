@@ -13,7 +13,7 @@ func main () {
 		Password: "",
 		DB: 0,
 	}
-	kr := kuji_redis.NewKujiRedisStrategy(&opt)
+	kr := kuji_redis.NewSimpleStrategy(&opt)
 	instance := kuji.NewKuji(kr)
 
 	c := []kuji.KujiCandidate{
@@ -31,7 +31,7 @@ func main () {
 		},
 	}
 
-	_, err := instance.RegisterCandidatesWithKey("foo", c)
+	_, err := instance.RegisterCandidatesWithKey("simple", c)
 	if (err != nil) {
 		panic(err)
 	}
@@ -42,7 +42,7 @@ func main () {
 
 func PickOne(k kuji.Kuji) {
 	for i := 0; i < 1000; i++ {
-		num, err := k.PickOneByKey("foo")
+		num, err := k.PickOneByKey("simple")
 		if err != nil {
 			panic(err)
 		}
