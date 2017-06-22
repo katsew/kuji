@@ -10,19 +10,15 @@ func TestNewKuji(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockStrategy := NewMockKujiStrategy(ctrl)
-	config := KujiStrategyConfig{
-		mockStrategy,
-		nil,
-	}
-	k := NewKuji("mock", config)
+	k := NewKuji()
+	l := NewKuji()
 
-	instanceType := reflect.TypeOf(k)
-	kujiType := reflect.TypeOf(Kuji{})
-	if instanceType != kujiType {
+	kType := reflect.TypeOf(k)
+	lType := reflect.TypeOf(l)
+	if kType != lType {
 		t.Error("TypeError, instance type mismatched!")
 	}
-	t.Log("Instance type matched with Kuji :)", instanceType, kujiType)
+	t.Log("Instance type matched with Kuji :)", kType, lType)
 }
 
 func TestKuji_PickOneByKey(t *testing.T) {
@@ -31,7 +27,8 @@ func TestKuji_PickOneByKey(t *testing.T) {
 
 	mockStrategy := NewMockKujiStrategy(ctrl)
 	mockStrategy.EXPECT().PickOneByKey("PickOneByKey").Return("1", nil).Times(1)
-	k := NewKuji("mock", KujiStrategyConfig{
+	k := NewKuji()
+	k.Use("mock", KujiStrategyConfig{
 		mockStrategy,
 		nil,
 	})
@@ -49,9 +46,7 @@ func TestKuji_PickAndDeleteOneByKey(t *testing.T) {
 
 	mockStrategy := NewMockKujiStrategy(ctrl)
 	mockStrategy.EXPECT().PickAndDeleteOneByKey("PickAndDeleteOneByKey").Return("1", nil).Times(1)
-	k := Kuji{
-		strategies: make(map[string]KujiStrategyConfig),
-	}
+	k := NewKuji()
 	k.Use("mock", KujiStrategyConfig{
 		mockStrategy,
 		nil,
@@ -70,9 +65,7 @@ func TestKuji_PickOneByKeyAndIndex(t *testing.T) {
 
 	mockStrategy := NewMockKujiStrategy(ctrl)
 	mockStrategy.EXPECT().PickOneByKeyAndIndex("PickOneByKeyAndIndex", int64(1)).Return("1", nil).Times(1)
-	k := Kuji{
-		strategies: make(map[string]KujiStrategyConfig),
-	}
+	k := NewKuji()
 	k.Use("mock", KujiStrategyConfig{
 		mockStrategy,
 		nil,
@@ -96,9 +89,7 @@ func TestKuji_RegisterCandidatesWithKey(t *testing.T) {
 	}
 	mockStrategy := NewMockKujiStrategy(ctrl)
 	mockStrategy.EXPECT().RegisterCandidatesWithKey("RegisterCandidatesWithKey", candidates).Return(int64(200), nil).Times(1)
-	k := Kuji{
-		strategies: make(map[string]KujiStrategyConfig),
-	}
+	k := NewKuji()
 	k.Use("mock", KujiStrategyConfig{
 		mockStrategy,
 		nil,
@@ -116,9 +107,7 @@ func TestKuji_Len(t *testing.T) {
 
 	mockStrategy := NewMockKujiStrategy(ctrl)
 	mockStrategy.EXPECT().Len("Len").Return(int64(1000), nil).Times(1)
-	k := Kuji{
-		strategies: make(map[string]KujiStrategyConfig),
-	}
+	k := NewKuji()
 	k.Use("mock", KujiStrategyConfig{
 		mockStrategy,
 		nil,
@@ -137,9 +126,7 @@ func TestKuji_List(t *testing.T) {
 	elements := []string{"1", "2", "3", "4", "5"}
 	mockStrategy := NewMockKujiStrategy(ctrl)
 	mockStrategy.EXPECT().List("List").Return(elements, nil).Times(1)
-	k := Kuji{
-		strategies: make(map[string]KujiStrategyConfig),
-	}
+	k := NewKuji()
 	k.Use("mock", KujiStrategyConfig{
 		mockStrategy,
 		nil,

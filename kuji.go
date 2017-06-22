@@ -1,24 +1,20 @@
 package kuji
 
-import "errors"
+import (
+	"errors"
+)
 
-type Kuji struct {
+type kuji struct {
 	strategies map[string]KujiStrategyConfig
 }
 
-func NewKuji(strategyName string, config KujiStrategyConfig) Kuji {
-
-	k := Kuji{
+func NewKuji() *kuji {
+	return &kuji{
 		make(map[string]KujiStrategyConfig),
 	}
-	if strategyName != "" && config.Strategy != nil {
-		k.strategies[strategyName] = config
-	}
-	return k
-
 }
 
-func (k Kuji) Use(strategyName string, strategyConfig KujiStrategyConfig) error {
+func (k *kuji) Use(strategyName string, strategyConfig KujiStrategyConfig) error {
 	if k.strategies[strategyName].Strategy != nil {
 		return errors.New("This strategy has already assigned!")
 	}
@@ -26,7 +22,7 @@ func (k Kuji) Use(strategyName string, strategyConfig KujiStrategyConfig) error 
 	return nil
 }
 
-func (k Kuji) PickOneByKey(strategyName string, key string) (string, error) {
+func (k *kuji) PickOneByKey(strategyName string, key string) (string, error) {
 
 	if ok, error := k.strategies[strategyName].Strategy.PickOneByKey(key); error != nil {
 		if k.strategies[strategyName].FailOver != nil {
@@ -39,7 +35,7 @@ func (k Kuji) PickOneByKey(strategyName string, key string) (string, error) {
 
 }
 
-func (k Kuji) PickOneByKeyAndIndex(strategyName string, key string, index int64) (string, error) {
+func (k *kuji) PickOneByKeyAndIndex(strategyName string, key string, index int64) (string, error) {
 
 	if ok, error := k.strategies[strategyName].Strategy.PickOneByKeyAndIndex(key, index); error != nil {
 		if k.strategies[strategyName].FailOver != nil {
@@ -52,7 +48,7 @@ func (k Kuji) PickOneByKeyAndIndex(strategyName string, key string, index int64)
 
 }
 
-func (k Kuji) PickAndDeleteOneByKey(strategyName string, key string) (string, error) {
+func (k *kuji) PickAndDeleteOneByKey(strategyName string, key string) (string, error) {
 
 	if ok, error := k.strategies[strategyName].Strategy.PickAndDeleteOneByKey(key); error != nil {
 		if k.strategies[strategyName].FailOver != nil {
@@ -65,7 +61,7 @@ func (k Kuji) PickAndDeleteOneByKey(strategyName string, key string) (string, er
 
 }
 
-func (k Kuji) RegisterCandidatesWithKey(strategyName string, key string, candidates []KujiCandidate) (int64, error) {
+func (k *kuji) RegisterCandidatesWithKey(strategyName string, key string, candidates []KujiCandidate) (int64, error) {
 
 	if ok, error := k.strategies[strategyName].Strategy.RegisterCandidatesWithKey(key, candidates); error != nil {
 		if k.strategies[strategyName].FailOver != nil {
@@ -78,7 +74,7 @@ func (k Kuji) RegisterCandidatesWithKey(strategyName string, key string, candida
 
 }
 
-func (k Kuji) Len(strategyName string, key string) (int64, error) {
+func (k *kuji) Len(strategyName string, key string) (int64, error) {
 
 	if ok, error := k.strategies[strategyName].Strategy.Len(key); error != nil {
 		if k.strategies[strategyName].FailOver != nil {
@@ -91,7 +87,7 @@ func (k Kuji) Len(strategyName string, key string) (int64, error) {
 
 }
 
-func (k Kuji) List(strategyName string, key string) ([]string, error) {
+func (k *kuji) List(strategyName string, key string) ([]string, error) {
 
 	if ok, error := k.strategies[strategyName].Strategy.List(key); error != nil {
 		if k.strategies[strategyName].FailOver != nil {
